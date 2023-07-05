@@ -1,12 +1,16 @@
 #create a Vertex and Face datatype using structure
+after reviewing what is a PLY file I found that vertices have 3 coordinates however faces could have different number of vertices
+the first number indicates how many vertices a face is formed by.
 
-#create a function readHeader that is used to know how many line the header contains in order to skip them
+
+
+#create a function readHeader that is used to know how many lines the header contains in order to skip them
 this function could be eliminated and integrated as while loop in the remaining functions
 however this will help to get directly the number of lines
 
 #create a function findFeatureNbr that find the the number of vertices and faces and return an array containing both values
 this is done by finding the strings "element vertex " and "element face " then taking the substring that starts when the string ends
-in other terms taking substring (that contains the nbr of vertices/faces) from the line and converting it to integrated
+in other terms taking substring (that contains the nbr of vertices/faces) from the line and converting it to integer
 
 if the string is present line.find() will return the index at which the string is present else it will return -1
 
@@ -14,7 +18,7 @@ finally the file is closed and the array containing both counts is returned
 
 
 #create a function that retuns a vector of vertices
-by inspecting the ply file we notice that a vertex is composed of 3 float values
+by inspecting the ply file we notice that a vertex is composed of 3 float values as mentioned above
 
 if we start reading from the begining of the file we need to skip the header to reach the float values
 therefore the first while loop is used to iterate over the header
@@ -30,11 +34,15 @@ finaly we retun the vector of vertices
 
 #we repeat the same procedure for getting faces however the difference is that we have a vector of int instead of 3 floats
 the vector of int is useful because a face could have different number of parameters depending on its shape
+so if we change the faces properties, the function will still work and output the correct values
+we need to start reading from: header_lines+vertices_lines
 
-we can skip the first number and not include it when returning the face structure
+(we can skip the first number and not include it when returning the face structure
 this can be done simply by using a continue statement if we are in the first iteration
-or by reading and not pusishing the number in the vector of indices
+or by reading and not pusishing the number in the vector of indices) eg: 4 3 1 0 2  (we can skip 4)
 
+
+note:
 #a ply library is available to read ply file directly. We need to install it and use it
 include <ply/ply.h>
 
